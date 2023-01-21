@@ -1,12 +1,14 @@
 // import { Typography } from "@mui/material";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
+import alanBtn from "@alan-ai/alan-sdk-web";
 import getNews from "../service/GetNews";
 import "./GetNews.css";
 
 const NewsData = () => {
   const [newsData, setNewsData] = useState([]);
-  const [selectOption, setSelectOption] = useState([]);
+  const alankey = `6bab3063b9274bf257e911612dc913892e956eca572e1d8b807a3e2338fdd0dc/stage`;
+  const [selectOption, setSelectOption] = useState("");
 
   const getAllNews = async () => {
     let data = await getNews(selectOption);
@@ -18,14 +20,26 @@ const NewsData = () => {
   };
 
   useEffect(() => {
+    alanBtn({
+      key: "cf6f2f0b118118a237537b4f04bbeaf32e956eca572e1d8b807a3e2338fdd0dc/stage",
+      onCommand: (commandData) => {
+        console.log(commandData?.data.toLowerCase());
+        setSelectOption(commandData.data.toLowerCase());
+      },
+    });
+  }, [alankey]);
+
+  useEffect(() => {
     getAllNews();
   }, [selectOption]);
+
   console.log(newsData);
   return (
     <div className="main">
       <h1>Voice News</h1>
       <div className="news-category">
-        <label for="cars">Choose News Category:</label>
+        <label>Choose News Category:</label>
+        {/* <label>Choosed by voice "{selectOption}"</label> */}
 
         <select
           className="select-news"
@@ -33,6 +47,7 @@ const NewsData = () => {
           id="category"
           onChange={selectCategory}
         >
+          <option value={selectOption}>{selectOption}</option>
           <option value="General">General</option>
           <option value="Health">Health</option>
           <option value="Business">Business</option>

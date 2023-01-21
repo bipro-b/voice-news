@@ -1,0 +1,11 @@
+intent('$(item* (.*))', (p) => {
+    
+    if(p.item.value ==='General'||p.item.value==='business'||p.item.value==='Sports'||p.item.value==='health'){
+        p.play({ command: 'VoiceNews', data: p.item.value });
+        p.play(`Fetching News on ${p.item.value} category`);
+    }
+    else{
+        p.play(`Cannot get news`);
+    }
+  
+})
