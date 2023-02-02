@@ -36,7 +36,6 @@ const NewsData = () => {
   console.log(newsData);
   return (
     <div className="main">
-      <h1>Voice News</h1>
       <div className="news-category">
         <label>Choose News Category:</label>
         {/* <label>Choosed by voice "{selectOption}"</label> */}
